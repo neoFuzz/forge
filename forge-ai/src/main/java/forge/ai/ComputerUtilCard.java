@@ -53,6 +53,8 @@ import forge.game.zone.MagicStack;
 import forge.game.zone.ZoneType;
 import forge.item.PaperCard;
 
+import static forge.ai.AiStringConstants.SACME;
+
 public class ComputerUtilCard {
     public static Card getMostExpensivePermanentAI(final CardCollectionView list, final SpellAbility spell, final boolean targeted) {
         CardCollectionView all = list;
@@ -1515,7 +1517,7 @@ public class ComputerUtilCard {
             if (survivor) {
                 for (Card o : opposing) {
                     if (!ComputerUtilCombat.combatantWouldBeDestroyed(opp, o, combat)
-                            && !(o.hasSVar("SacMe") && Integer.parseInt(o.getSVar("SacMe")) > 2)) {
+                            && !(o.hasSVar(SACME) && Integer.parseInt(o.getSVar(SACME)) > 2)) {
                         if (isAttacking) {
                             if (ComputerUtilCombat.blockerWouldBeDestroyed(opp, o, pumpedCombat)) {
                                 return true;

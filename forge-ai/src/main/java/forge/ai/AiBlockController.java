@@ -46,6 +46,8 @@ import forge.game.zone.ZoneType;
 import forge.util.MyRandom;
 import forge.util.collect.FCollectionView;
 
+import static forge.ai.AiStringConstants.SACME;
+
 
 /**
  * <p>
@@ -238,7 +240,7 @@ public class AiBlockController {
                 // 3.Blockers that can destroy the attacker and have an upside when dying
                 killingBlockers = getKillingBlockers(combat, attacker, blockers);
                 for (Card b : killingBlockers) {
-                    if ((b.hasKeyword(Keyword.UNDYING) && b.getCounters(CounterEnumType.P1P1) == 0) || b.hasSVar("SacMe")
+                    if ((b.hasKeyword(Keyword.UNDYING) && b.getCounters(CounterEnumType.P1P1) == 0) || b.hasSVar(SACME)
                             || (b.hasKeyword(Keyword.VANISHING) && b.getCounters(CounterEnumType.TIME) == 1)
                             || (b.hasKeyword(Keyword.FADING) && b.getCounters(CounterEnumType.FADE) == 0)
                             || b.hasSVar("EndOfTurnLeavePlay")) {
@@ -249,7 +251,7 @@ public class AiBlockController {
                 // 4.Blockers that have a big upside when dying
                 // 4a.Blockers that are profitable to sacrifice even in the event of an unfavorable block
                 for (Card b : blockers) {
-                    if ((b.hasSVar("SacMe") && Integer.parseInt(b.getSVar("SacMe")) > 3) ||
+                    if ((b.hasSVar(SACME) && Integer.parseInt(b.getSVar(SACME)) > 3) ||
                             (b.hasSVar("SacMeAfterBlock") && !attacker.hasKeyword(Keyword.TRAMPLE) && !attacker.hasKeyword(Keyword.BANDING))) {
                         blocker = b;
                         if (!ComputerUtilCombat.canDestroyAttacker(ai, attacker, blocker, combat, false)) {
@@ -1308,7 +1310,7 @@ public class AiBlockController {
         }
 
         if (attacker != null && attacker.getOwner() != null)
-            if (attacker.getOwner().equals(ai) && "6".equals(attacker.getSVar("SacMe"))) {
+            if (attacker.getOwner().equals(ai) && "6".equals(attacker.getSVar(SACME))) {
             // Temporarily controlled object - don't trade with it
             // TODO: find a more reliable way to figure out that control will be reestablished next turn
             return false;

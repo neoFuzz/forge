@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
@@ -32,6 +33,10 @@
         <repository>
             <id>Google Maven</id>
             <url>https://maven.google.com/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
@@ -234,7 +239,7 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>com.simpligility.maven.plugins</groupId>
+                        <groupId>com.github.cardforge.maven.plugins</groupId>
                         <artifactId>android-maven-plugin</artifactId>
                         <dependencies>
                             <dependency>
@@ -255,7 +260,7 @@
                                 <systemPath>${pom.basedir}/libs/sun-misc.jar</systemPath>
                             </dependency>
                         </dependencies>
-                        <version>4.6.2</version>
+                        <version>4.6.3</version>
                         <extensions>true</extensions>
                         <configuration>
                             <sign>
@@ -346,7 +351,7 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>com.simpligility.maven.plugins</groupId>
+                        <groupId>com.github.cardforge.maven.plugins</groupId>
                         <artifactId>android-maven-plugin</artifactId>
                         <dependencies>
                             <dependency>
@@ -367,7 +372,7 @@
                                 <systemPath>${pom.basedir}/libs/sun-misc.jar</systemPath>
                             </dependency>
                         </dependencies>
-                        <version>4.6.2</version>
+                        <version>4.6.3</version>
                         <extensions>true</extensions>
                         <configuration>
                             <sign>
@@ -438,28 +443,36 @@
                                 <configuration>
                                     <target>
                                         <copy todir="${project.build.directory}/res">
-                                            <fileset dir="${basedir}/../forge-gui/" includes="LICENSE.txt" />
-                                            <fileset dir="${basedir}/../forge-gui/release-files/" includes="CONTRIBUTORS.txt" />
-                                            <fileset dir="${basedir}/../forge-gui/release-files/" includes="INSTALLATION.txt" />
-                                            <fileset dir="${basedir}/../forge-gui/release-files/" includes="ISSUES.txt" />
-                                            <fileset dir="${basedir}/../forge-gui/release-files/" includes="CHANGES.txt" />
-                                            <fileset dir="${basedir}/../forge-gui/release-files/" includes="GAMEPAD_README.txt" />
-                                            <fileset dir="${basedir}/../forge-gui/" includes="MANUAL.txt" />
-                                            <fileset dir="${basedir}/../forge-gui-mobile-dev/" includes="sentry.properties" />
+                                            <fileset dir="${basedir}/../forge-gui/" includes="LICENSE.txt"/>
+                                            <fileset dir="${basedir}/../forge-gui/release-files/"
+                                                     includes="CONTRIBUTORS.txt"/>
+                                            <fileset dir="${basedir}/../forge-gui/release-files/"
+                                                     includes="INSTALLATION.txt"/>
+                                            <fileset dir="${basedir}/../forge-gui/release-files/"
+                                                     includes="ISSUES.txt"/>
+                                            <fileset dir="${basedir}/../forge-gui/release-files/"
+                                                     includes="CHANGES.txt"/>
+                                            <fileset dir="${basedir}/../forge-gui/release-files/"
+                                                     includes="GAMEPAD_README.txt"/>
+                                            <fileset dir="${basedir}/../forge-gui/" includes="MANUAL.txt"/>
+                                            <fileset dir="${basedir}/../forge-gui-mobile-dev/"
+                                                     includes="sentry.properties"/>
                                             <fileset dir="${basedir}/../forge-gui/">
-                                                <include name="res/**" />
-                                                <exclude name="res/cardsfolder/**" />
+                                                <include name="res/**"/>
+                                                <exclude name="res/cardsfolder/**"/>
                                             </fileset>
                                         </copy>
                                         <copy todir="${project.build.directory}/res/res">
                                             <fileset dir="${project.build.directory}/classes/assets">
-                                                <include name="build.txt" />
+                                                <include name="build.txt"/>
                                             </fileset>
                                         </copy>
-                                        <mkdir dir="${project.build.directory}/res/res/cardsfolder" />
-                                        <zip destfile="${project.build.directory}/res/res/cardsfolder/cardsfolder.zip" basedir="${basedir}/../forge-gui/res/cardsfolder" level="1" />
-                                        <zip destfile="${project.build.directory}/assets.zip" basedir="${project.build.directory}/res" level="1" />
-                                        <delete dir="${project.build.directory}/res" />
+                                        <mkdir dir="${project.build.directory}/res/res/cardsfolder"/>
+                                        <zip destfile="${project.build.directory}/res/res/cardsfolder/cardsfolder.zip"
+                                             basedir="${basedir}/../forge-gui/res/cardsfolder" level="1"/>
+                                        <zip destfile="${project.build.directory}/assets.zip"
+                                             basedir="${project.build.directory}/res" level="1"/>
+                                        <delete dir="${project.build.directory}/res"/>
                                     </target>
                                 </configuration>
                                 <goals>
@@ -505,17 +518,23 @@
                                 <phase>install</phase>
                                 <configuration>
                                     <target>
-                                        <ftp action="mkdir" password="${cardforge.pass}" server="${cardforge.server}" userid="${cardforge.user}" passive="true" remotedir="maven/releases/forge/forge-gui-android/${snapshot-version}/" />
-                                        <ftp password="${cardforge.pass}" server="${cardforge.server}" userid="${cardforge.user}" passive="true" remotedir="maven/releases/forge/forge-gui-android/${snapshot-version}/">
+                                        <ftp action="mkdir" password="${cardforge.pass}" server="${cardforge.server}"
+                                             userid="${cardforge.user}" passive="true"
+                                             remotedir="maven/releases/forge/forge-gui-android/${snapshot-version}/"/>
+                                        <ftp password="${cardforge.pass}" server="${cardforge.server}"
+                                             userid="${cardforge.user}" passive="true"
+                                             remotedir="maven/releases/forge/forge-gui-android/${snapshot-version}/">
                                             <fileset dir="${project.build.directory}">
-                                                <include name="${project.build.finalName}-signed-aligned.apk" />
-                                                <include name="assets.zip" />
+                                                <include name="${project.build.finalName}-signed-aligned.apk"/>
+                                                <include name="assets.zip"/>
                                             </fileset>
                                         </ftp>
-                                        <ftp password="${cardforge.pass}" server="${cardforge.server}" userid="${cardforge.user}" passive="true" remotedir="maven/releases/forge/forge-gui-android/">
+                                        <ftp password="${cardforge.pass}" server="${cardforge.server}"
+                                             userid="${cardforge.user}" passive="true"
+                                             remotedir="maven/releases/forge/forge-gui-android/">
                                             <fileset dir="${project.build.directory}/classes/assets">
-                                                <include name="version.txt" />
-                                                <include name="build.txt" />
+                                                <include name="version.txt"/>
+                                                <include name="build.txt"/>
                                             </fileset>
                                         </ftp>
                                     </target>
@@ -563,7 +582,7 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>com.simpligility.maven.plugins</groupId>
+                        <groupId>com.github.cardforge.maven.plugins</groupId>
                         <artifactId>android-maven-plugin</artifactId>
                         <dependencies>
                             <dependency>
@@ -584,7 +603,7 @@
                                 <systemPath>${pom.basedir}/libs/sun-misc.jar</systemPath>
                             </dependency>
                         </dependencies>
-                        <version>4.6.2</version>
+                        <version>4.6.3</version>
                         <extensions>true</extensions>
                         <configuration>
                             <sign>
@@ -633,6 +652,21 @@
                                 </goals>
                                 <configuration>
                                     <manifestVersionName>${snapshot-version}</manifestVersionName>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>se.bjurr.gitchangelog</groupId>
+                        <artifactId>git-changelog-maven-plugin</artifactId>
+                        <version>1.101.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>git-changelog</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>true</skip> <!-- Set skip flag from a property -->
                                 </configuration>
                             </execution>
                         </executions>

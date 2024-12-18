@@ -54,6 +54,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static forge.ai.AiStringConstants.SACME;
+
 /**
  * Special logic for individual cards
  * 
@@ -1426,9 +1428,9 @@ public class SpecialCardAi {
                     }
                 }
                 if (ownExiledValue > oppExiledValue + 150) {
-                    sa.getHostCard().setSVar("SacMe", "5");
+                    sa.getHostCard().setSVar(SACME, "5");
                 } else {
-                    sa.getHostCard().removeSVar("SacMe");
+                    sa.getHostCard().removeSVar(SACME);
                 }
             } else if (!threats.isEmpty()) {
                 sa.getTargets().add(ComputerUtilCard.getBestCreatureAI(threats));
@@ -1771,7 +1773,7 @@ public class SpecialCardAi {
                         final boolean can_kill = single.getSVar("Targeting").equals("Dies")
                                 || (ComputerUtilCombat.getEnoughDamageToKill(single, 3, source, false, false) <= 3)
                                         && !ComputerUtil.canRegenerate(ai, single)
-                                        && !(single.getSVar("SacMe").length() > 0);
+                                        && !(single.getSVar(SACME).length() > 0);
                         if (can_kill) {
                             return false;
                         }

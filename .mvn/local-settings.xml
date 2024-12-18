@@ -8,7 +8,7 @@
         <mirror>
             <id>4thline-repo-http-unblocker</id>
             <mirrorOf>4thline-repo</mirrorOf>
-            <name></name>
+            <name>4th line</name>
             <url>http://4thline.org/m2</url>
         </mirror>
     </mirrors>

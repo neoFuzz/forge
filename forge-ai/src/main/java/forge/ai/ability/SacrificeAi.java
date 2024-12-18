@@ -20,6 +20,8 @@ import forge.game.zone.ZoneType;
 import java.util.List;
 import java.util.Map;
 
+import static forge.ai.AiStringConstants.SACME;
+
 public class SacrificeAi extends SpellAbilityAi {
 
     @Override
@@ -74,7 +76,7 @@ public class SacrificeAi extends SpellAbilityAi {
             List<Card> list = CardLists.getValidCards(opp.getCardsIn(ZoneType.Battlefield), valid, sa.getActivatingPlayer(), source, sa);
 
             for (Card c : list) {
-                if (c.hasSVar("SacMe") && Integer.parseInt(c.getSVar("SacMe")) > 3) {
+                if (c.hasSVar(SACME) && Integer.parseInt(c.getSVar(SACME)) > 3) {
                     return false;
                 }
             }
@@ -147,9 +149,9 @@ public class SacrificeAi extends SpellAbilityAi {
                             break;
                         }
                     }
-                    return c.hasSVar("SacMe") || isLethal;
+                    return c.hasSVar(SACME) || isLethal;
                 }
-                if (c.hasSVar("SacMe") || ComputerUtilCard.evaluateCreature(c) <= 135) {
+                if (c.hasSVar(SACME) || ComputerUtilCard.evaluateCreature(c) <= 135) {
                     return true;
                 }
             }
@@ -181,7 +183,7 @@ public class SacrificeAi extends SpellAbilityAi {
                     }
                 } else {
                     for (Card c : targetable) {
-                        if (c.canBeSacrificedBy(sa, true) && (c.hasSVar("SacMe") || (c.isCreature() && ComputerUtilCard.evaluateCreature(c) <= 135)) && !c.equals(sa.getHostCard())) {
+                        if (c.canBeSacrificedBy(sa, true) && (c.hasSVar(SACME) || (c.isCreature() && ComputerUtilCard.evaluateCreature(c) <= 135)) && !c.equals(sa.getHostCard())) {
                             priorityTgts.add(c);
                         }
                     }

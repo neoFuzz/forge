@@ -34,6 +34,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static forge.ai.AiStringConstants.SACME;
+
 public class DamageDealAi extends DamageAiBase {
     @Override
     public boolean chkAIDrawback(SpellAbility sa, Player ai) {
@@ -331,7 +333,7 @@ public class DamageDealAi extends DamageAiBase {
         CardCollection killables = CardLists.filter(hPlay, c -> c.getSVar("Targeting").equals("Dies")
                 || (ComputerUtilCombat.getEnoughDamageToKill(c, d, source, false, noPrevention) <= d)
                     && !ComputerUtil.canRegenerate(ai, c)
-                    && !c.hasSVar("SacMe")
+                    && !c.hasSVar(SACME)
                     && !ComputerUtilCard.hasActiveUndyingOrPersist(c));
 
         // Filter AI-specific targets if provided
@@ -405,7 +407,7 @@ public class DamageDealAi extends DamageAiBase {
         CardCollection killables = CardLists.filter(hPlay, c -> c.getSVar("Targeting").equals("Dies")
                 || (ComputerUtilCombat.getEnoughDamageToKill(c, d, source, false, noPrevention) <= d)
                 && !ComputerUtil.canRegenerate(ai, c)
-                && !c.hasSVar("SacMe"));
+                && !c.hasSVar(SACME));
 
         // Filter AI-specific targets if provided
         killables = ComputerUtil.filterAITgts(sa, ai, killables, true);

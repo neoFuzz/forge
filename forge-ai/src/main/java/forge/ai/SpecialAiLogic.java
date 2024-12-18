@@ -20,6 +20,8 @@ import forge.util.Expressions;
 
 import java.util.List;
 
+import static forge.ai.AiStringConstants.SACME;
+
 /*
  * This class contains logic which is shared by several cards with different ability types (e.g. AF ChangeZone / AF Destroy)
  * Ideally, the naming scheme for methods in this class should be doXXXLogic, where XXX is the name of the logic,
@@ -142,7 +144,7 @@ public class SpecialAiLogic {
                 if (indestructible || (source.getNetToughness() <= dmg && source.getNetToughness() + toughnessBonus * numCreatsToSac > dmg)) {
                     final CardCollection sacFodder = CardLists.filter(ai.getCreaturesInPlay(),
                             card -> ComputerUtilCard.isUselessCreature(ai, card)
-                                    || card.hasSVar("SacMe")
+                                    || card.hasSVar(SACME)
                                     || ComputerUtilCard.evaluateCreature(card) < selfEval // Maybe around 150 is OK?
                     );
                     return sacFodder.size() >= numCreatsToSac;
@@ -205,7 +207,7 @@ public class SpecialAiLogic {
             // We can't deal lethal, check if there's any sac fodder than can be used for other circumstances
             final CardCollection sacFodder = CardLists.filter(ai.getCreaturesInPlay(),
                     card -> ComputerUtilCard.isUselessCreature(ai, card)
-                            || card.hasSVar("SacMe")
+                            || card.hasSVar(SACME)
                             || ComputerUtilCard.evaluateCreature(card) < selfEval // Maybe around 150 is OK?
             );
 
@@ -324,7 +326,7 @@ public class SpecialAiLogic {
             final boolean isBlocking = combat != null && combat.isBlocking(source);
             final CardCollection sacFodder = CardLists.filter(relevantCreats,
                     card -> ComputerUtilCard.isUselessCreature(ai, card)
-                            || card.hasSVar("SacMe")
+                            || card.hasSVar(SACME)
                             || (isBlocking && ComputerUtilCard.evaluateCreature(card) < selfEval)
                             || ComputerUtil.predictThreatenedObjects(ai, null, true).contains(card)
             );

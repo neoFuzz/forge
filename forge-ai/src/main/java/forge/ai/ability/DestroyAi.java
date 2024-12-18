@@ -17,6 +17,8 @@ import forge.game.zone.ZoneType;
 
 import java.util.function.Predicate;
 
+import static forge.ai.AiStringConstants.SACME;
+
 public class DestroyAi extends SpellAbilityAi {
     @Override
     public boolean chkAIDrawback(SpellAbility sa, Player ai) {
@@ -187,7 +189,7 @@ public class DestroyAi extends SpellAbilityAi {
                             }
                         }
                     }
-                    if (c.hasSVar("SacMe")) {
+                    if (c.hasSVar(SACME)) {
                         return false;
                     }
                     //Check for undying

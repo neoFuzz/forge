@@ -52,6 +52,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static forge.ai.AiStringConstants.SACME;
+
 
 /**
  * <p>
@@ -1411,7 +1413,7 @@ public class AiAttackController {
                         canBeKilledByOne = true; // there is a single creature on the battlefield that can kill the creature
                         // see if the defending creature is of higher or lower
                         // value. We don't want to attack only to lose value
-                        if (isWorthLessThanAllKillers && !attacker.hasSVar("SacMe")
+                        if (isWorthLessThanAllKillers && !attacker.hasSVar(SACME)
                                 && ComputerUtilCard.evaluateCreature(blocker) <= ComputerUtilCard.evaluateCreature(attacker)) {
                             isWorthLessThanAllKillers = false;
                         }
