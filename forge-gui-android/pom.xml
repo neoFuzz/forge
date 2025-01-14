@@ -228,54 +228,65 @@
     <profiles>
         <profile>
             <id>android-debug</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <properties>
                 <packaging.type>apk</packaging.type>
+                <android.debug>true</android.debug>
+                <android.deployapk.filename>target/${project.build.finalName}-aligned-debugSigned.apk</android.deployapk.filename>
             </properties>
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>com.simpligility.maven.plugins</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.4.1</version>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <executions>
+                            <execution>
+                                <id>SignV2</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <workingDirectory>${pom.basedir}</workingDirectory>
+                            <executable>java</executable>
+                            <arguments>
+                                <argument>-jar</argument>
+                                <argument>${pom.basedir}/tools/uber-apk-signer.jar</argument>
+                                <argument>-a</argument>
+                                <argument>${pom.basedir}/target/</argument>
+                                <argument>--debug</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.cardforge.maven.plugins</groupId>
                         <artifactId>android-maven-plugin</artifactId>
-                        <dependencies>
-                            <dependency>
-                                <groupId>javax.xml.bind</groupId>
-                                <artifactId>jaxb-api</artifactId>
-                                <version>2.3.1</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>com.sun.xml.bind</groupId>
-                                <artifactId>jaxb-impl</artifactId>
-                                <version>2.3.4</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>sun</groupId>
-                                <artifactId>misc</artifactId>
-                                <version>1</version>
-                                <scope>system</scope>
-                                <systemPath>${pom.basedir}/libs/sun-misc.jar</systemPath>
-                            </dependency>
-                        </dependencies>
-                        <version>4.6.2</version>
+                        <version>4.7.0</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <sign>
-                                <debug>true</debug>
-                            </sign>
+                            <release>false</release>
                             <sdk>
                                 <platform>35</platform>
                                 <buildTools>35.0.0</buildTools>
                             </sdk>
+                            <manifest>
+                                <debuggable>true</debuggable>
+                            </manifest>
                             <dexForceJumbo>true</dexForceJumbo>
                             <assetsDirectory>${project.basedir}/assets</assetsDirectory>
                             <resourceDirectory>${project.basedir}/res</resourceDirectory>
                             <nativeLibrariesDirectory>${project.basedir}/libs</nativeLibrariesDirectory>
                             <extractDuplicates>true</extractDuplicates>
                             <proguard>
-                                <skip>false</skip>
+                                <skip>true</skip>
                                 <config>${project.basedir}/proguard.cfg</config>
                             </proguard>
                             <proguardProguardJarPath>${pom.basedir}/tools/proguard.jar</proguardProguardJarPath>
-                            <release>true</release>
                             <dexCompiler>d8</dexCompiler>
                             <d8>
                                 <minApi>26</minApi>
@@ -298,6 +309,14 @@
                                 <id>update-manifest</id>
                                 <goals>
                                     <goal>manifest-merger</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>debug-app</id>
+                                <goals>
+                                    <goal>deploy-apk</goal> <!-- Deploy APK to device -->
+                                    <goal>connect</goal>
+                                    <goal>run</goal> <!-- Start the app on the device -->
                                 </goals>
                             </execution>
                         </executions>
@@ -364,7 +383,7 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>com.simpligility.maven.plugins</groupId>
+                        <groupId>com.github.cardforge.maven.plugins</groupId>
                         <artifactId>android-maven-plugin</artifactId>
                         <dependencies>
                             <dependency>
@@ -385,7 +404,7 @@
                                 <systemPath>${pom.basedir}/libs/sun-misc.jar</systemPath>
                             </dependency>
                         </dependencies>
-                        <version>4.6.2</version>
+                        <version>4.7.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <sign>
@@ -581,7 +600,7 @@
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>com.simpligility.maven.plugins</groupId>
+                        <groupId>com.github.cardforge.maven.plugins</groupId>
                         <artifactId>android-maven-plugin</artifactId>
                         <dependencies>
                             <dependency>
@@ -602,7 +621,7 @@
                                 <systemPath>${pom.basedir}/libs/sun-misc.jar</systemPath>
                             </dependency>
                         </dependencies>
-                        <version>4.6.2</version>
+                        <version>4.7.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <sign>
